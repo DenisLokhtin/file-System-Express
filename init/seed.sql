@@ -13,7 +13,7 @@ CREATE TABLE file
             primary key,
     "createDateTime" timestamp with time zone default now() not null,
     path             varchar                                not null,
-    name             varchar                                not null,
+    name             varchar                unique          not null,
     mimetype         varchar                                not null,
     size             integer                                not null
 );
