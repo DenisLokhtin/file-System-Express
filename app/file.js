@@ -8,6 +8,8 @@ const savePath = path.join(__dirname, '../uploads/');
 
 
 router.put('/:fileName', async (req, res) => {
+    if(req.headers['content-length'] === '0') return res.status(404).send('file not send');
+
     const file = await pool.query(`SELECT * FROM file WHERE name = '${req.params.fileName}' LIMIT 1`)
 
     if (!file.rows.length) {
