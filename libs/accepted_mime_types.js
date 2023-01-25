@@ -1,4 +1,4 @@
-const type_dictionary = {
+const acceptedMimeTypes = {
     "audio/aac":".aac",
     "application/x-abiword":".abw",
     "application/x-freearc":".arc",
@@ -53,7 +53,7 @@ const type_dictionary = {
     "image/tiff":".tiff",
     "video/mp2t":".ts",
     "font/ttf":".ttf",
-    "text/plain":".txt",
+    "text/plain":".`txt`",
     "application/vnd.visio":".vsd",
     "audio/wav":".wav",
     "audio/webm":".weba",
@@ -74,4 +74,4 @@ const type_dictionary = {
     "application/x-7z-compressed":".7z",
 }
 
-module.exports = type_dictionary;
+export default acceptedMimeTypes;

@@ -2,13 +2,15 @@
   "name": "filesystemexpress",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Main.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node Main.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node": "^19.4.0",
     "pg": "^8.8.0"
