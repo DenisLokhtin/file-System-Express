@@ -1,10 +1,11 @@
 import express from "express";
-import {upload, download} from "../controllers/file_controller.js";
+import FileController from "../controllers/file-controller.js";
 
 const router = express.Router({mergeParams: true});
+const fileController = new FileController();
 
-router.put("/", upload);
+router.put("/", fileController.upload);
 
-router.get("/", download);
+router.get("/", fileController.download);
 
 export default router;

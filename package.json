@@ -2,10 +2,10 @@
   "name": "filesystemexpress",
   "version": "1.0.0",
   "description": "",
-  "main": "Main.js",
+  "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "node Main.js"
+    "start": "node main.js"
   },
   "author": "",
   "license": "ISC",
