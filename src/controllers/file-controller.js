@@ -15,9 +15,9 @@ class FileController {
         const size = req.headers['content-length'];
         const fileName = req.params.fileName;
 
-        if (!acceptedMimeTypes.hasOwnProperty(type)) return res.status(404).send('type not supported');
-
         if (size === '0') return res.status(404).send('file not send');
+
+        if (!acceptedMimeTypes.hasOwnProperty(type)) return res.status(501).send('type not supported');
 
         if (!fileName) return res.status(407).send('name is required')
 

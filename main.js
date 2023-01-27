@@ -6,8 +6,6 @@ import routes from "./src/routers/routes.js";
 
 dotenv.config();
 
-console.log(config.files.baseDirectory);
-
 if (!fs.existsSync(config.files.baseDirectory)) {
     fs.mkdirSync(config.files.baseDirectory);
 }
@@ -17,9 +15,7 @@ app.use(express.json());
 app.use(express.static('data'));
 const port = +process.env.PORT || 5000;
 
-
 app.use("/file/:fileName", routes);
-
 
 app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
