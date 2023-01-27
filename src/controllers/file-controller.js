@@ -18,8 +18,15 @@ class FileController {
 
         const type = req.headers['content-type'];
         const size = req.headers['content-length'];
+        const writer = await writeFile(fileName, type);
 
-        await writeFile(res, req, fileName, type);
+        await req.pipe(writer)
+            .on('error', (err) => {
+                return res.status(500).send(err);
+            })
+            .on('finish', () => {
+                return res.status(200).send('File uploaded successfully');
+            });
         await fileStorage.uploadFile(fileName, type, size);
     }
 
@@ -30,9 +37,13 @@ class FileController {
 
         const file = await fileStorage.getFile(name);
 
-        if (!file.rows.length) return res.status(404).send('not found');
+        if (!file.rows[0]) return res.status(404).send('not found');
 
-        await readFile(res, file.rows[0].name, file.rows[0].mimetype);
+        const reader = await readFile(file.rows[0].name, file.rows[0].mimetype);
+
+        res.attachment(file.rows[0].name);
+        res.type(file.rows[0].mimetype);
+        reader.pipe(res);
     }
 }
 
