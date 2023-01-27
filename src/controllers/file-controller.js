@@ -1,6 +1,7 @@
 import FileStorage from "../services/file-service.js";
 import writeFile from "../../utils/write-file.js";
 import readFile from "../../utils/read-file.js";
+import acceptedMimeTypes from "../../libs/accepted-mime-types.js";
 
 const fileStorage = new FileStorage();
 
@@ -10,14 +11,16 @@ class FileController {
     }
 
     async upload(req, res) {
-        if (req.headers['content-length'] === '0') return res.status(404).send('file not send');
-
+        const type = req.headers['content-type'];
+        const size = req.headers['content-length'];
         const fileName = req.params.fileName;
+
+        if (!acceptedMimeTypes.hasOwnProperty(type)) return res.status(404).send('type not supported');
+
+        if (size === '0') return res.status(404).send('file not send');
 
         if (!fileName) return res.status(407).send('name is required')
 
-        const type = req.headers['content-type'];
-        const size = req.headers['content-length'];
         const writer = await writeFile(fileName, type);
 
         await req.pipe(writer)
@@ -43,7 +46,10 @@ class FileController {
 
         res.attachment(file.rows[0].name);
         res.type(file.rows[0].mimetype);
-        reader.pipe(res);
+        reader.pipe(res)
+            .on('error', (err) => {
+                return res.status(500).send(err);
+            });
     }
 }
 
